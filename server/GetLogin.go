@@ -12,7 +12,7 @@ type GetLoginResponse struct {
 	Connection       database.Connection   `json:"connection"`
 }
 
-func (Server *Server) GetLogin(ctx *fiber.Ctx) error {
+func (server *Server) GetLogin(ctx *fiber.Ctx) error {
 	cache := ctx.Locals("Cache")
 	connection, ok := cache.(database.Connection)
 
@@ -20,8 +20,7 @@ func (Server *Server) GetLogin(ctx *fiber.Ctx) error {
 		return ctx.Status(http.StatusNotAcceptable).JSON(response("error", fmt.Errorf("the cahe dont have a connection ").Error()))
 	}
 	res := GetLoginResponse{
-		StatusConnection: connection.Active,
-		Connection:       connection,
+		Connection: connection,
 	}
 
 	return ctx.JSON(res)

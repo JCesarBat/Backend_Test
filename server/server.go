@@ -21,12 +21,16 @@ func StartServer(GormStore *GORM.GormStore, store *database.SQLStore) *Server {
 	}
 	app := fiber.New()
 
-	grupoConMiddleware := app.Group("/", cache.New())
-	grupoConMiddleware.Get("auth/login", server.GetLogin)
-	grupoConMiddleware.Post("auth/login", server.Login)
-
+	app.Use(cache.New())
+	app.Post("auth/login", server.Login)
 	app.Post("/auth", server.CreateUser)
+
+	app.Get("auth/login", server.GetLogin)
 	app.Get("/auth/:user_id", server.GetUser)
+
+	app.Put("/auth/", server.PutUser)
+
+	app.Delete("/auth/:user_id", server.DeleteUser)
 	server.App = app
 	return &server
 }

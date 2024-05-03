@@ -18,5 +18,5 @@ migratedown:
 sqlc:
 	sqlc generate
 
-server :
+server:
 	go run main.go

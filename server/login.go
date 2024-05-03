@@ -51,11 +51,13 @@ func (server *Server) Login(ctx *fiber.Ctx) error {
 		return ctx.Status(http.StatusInternalServerError).JSON(response("error", fmt.Errorf("internal server error connection :%w", err).Error()))
 	}
 	ctx.Locals("Cache", connection)
+
 	response := LoginResponse{
 		User: user,
 		StatusConnection: database.NullRecordStatus{
-			RecordStatus: connection.RecordStatus.RecordStatus,
+			RecordStatus: connection.Active,
 			Valid:        true},
 	}
+
 	return ctx.JSON(response)
 }

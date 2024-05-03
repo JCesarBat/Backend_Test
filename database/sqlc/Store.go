@@ -7,7 +7,6 @@ type SQLStore struct {
 	*Queries
 }
 
-// NewStore creates a new store
 func NewStore(conn *sql.DB) *SQLStore {
 	return &SQLStore{
 		conn:    conn,
